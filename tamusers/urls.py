@@ -5,7 +5,7 @@ from django.core.exceptions import ImproperlyConfigured
 from . import views
 
 
-app_name = 'helusers'
+app_name = 'tamusers'
 
 urlpatterns = [
     path('logout/', views.LogoutView.as_view(), name='auth_logout'),
@@ -14,4 +14,4 @@ urlpatterns = [
 ]
 
 if not settings.LOGOUT_REDIRECT_URL:
-    raise ImproperlyConfigured("You must configure LOGOUT_REDIRECT_URL to use helusers views.")
+    raise ImproperlyConfigured("You must configure LOGOUT_REDIRECT_URL to use tamusers views.")

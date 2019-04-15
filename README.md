@@ -2,14 +2,14 @@
 [![codecov](https://codecov.io/gh/City-of-Helsinki/django-helusers/branch/master/graph/badge.svg)](https://codecov.org/gh/City-of-Helsinki/django-helusers)
 [![Requirements](https://requires.io/github/City-of-Helsinki/django-helusers/requirements.svg?branch=master)](https://requires.io/github/City-of-Helsinki/django-helusers/requirements/?branch=master)
 
-# Django app for City of Helsinki user infrastructure
+# Django app for Tunnistamo user infrastructure
 
 ## Installation
 
 First, install the pip package.
 
 ```bash
-pip install django-helusers
+pip install django-tamusers
 ```
 
 Second, implement your own custom User model in your application's
@@ -19,7 +19,7 @@ Second, implement your own custom User model in your application's
 
 # users/models.py
 
-from helusers.models import AbstractUser
+from tamusers.models import AbstractUser
 
 
 class User(AbstractUser):
@@ -29,24 +29,24 @@ class User(AbstractUser):
 ### Configuration of the auth provider
 
 - Add `social-auth-app-django` to your `requirements.in` or `requirements.txt` file and install the package.
-- Add `helusers` and `social_django` to the `INSTALLED_APPS` setting:
+- Add `tamusers` and `social_django` to the `INSTALLED_APPS` setting:
 
 ```python
 INSTALLED_APPS = (
-    'helusers',
+    'tamusers',
     ...
     'social_django',
     ...
 )
 ```
 
-***Note*** `helusers` must be the first one in the list to properly override the default admin site templates.
+***Note*** `tamusers` must be the first one in the list to properly override the default admin site templates.
 
 - Configure the following settings:
 
 ```python
 AUTHENTICATION_BACKENDS = (
-    'helusers.tunnistamo_oidc.TunnistamoOIDCAuth',
+    'tamusers.tunnistamo_oidc.TunnistamoOIDCAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -64,7 +64,7 @@ code.
 When that setting is in place, languages can be requested using query param `ui_locales=<language code>` when starting
 the login process, for example in your template
 ```
-<a href="{% url 'helusers:auth_login' %}?next=/foobar/&ui_locales=en">Login in English</a>
+<a href="{% url 'tamusers:auth_login' %}?next=/foobar/&ui_locales=en">Login in English</a>
 ```
 
 - Add URLs entries (to `<project>/urls.py`):
@@ -88,7 +88,7 @@ SOCIAL_AUTH_TUNNISTAMO_OIDC_ENDPOINT = TUNNISTAMO_BASE_URL + '/openid'
 
 - Set the session serializer to PickleSerializer
 
-helusers stores the access token expiration time as a datetime which is not
+tamusers stores the access token expiration time as a datetime which is not
 serializable to JSON, so Django needs to be configured to use the built-in
 PickeSerializer:
 
@@ -103,7 +103,7 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 ```python
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'helusers.oidc.ApiTokenAuthentication',
+        'tamusers.oidc.ApiTokenAuthentication',
     ),
 }
 ```
@@ -122,14 +122,14 @@ OIDC_API_TOKEN_AUTH = {
 ### Context processor
 
 If you need to access the Tunnistamo API from your JS code, you can include
-the Tunnistamo base URL in your template context using helusers's context processor:
+the Tunnistamo base URL in your template context using tamusers's context processor:
 
 ```python
 TEMPLATES = [
     {
         'OPTIONS': {
             'context_processors': [
-                'helusers.context_processors.settings'
+                'tamusers.context_processors.settings'
             ]
         }
     }

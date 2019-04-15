@@ -28,7 +28,7 @@ def get_username(details, backend, response, *args, **kwargs):
 
     If the user exists already, use the existing username. Otherwise
     generate username from the `new_uuid` using the
-    `helusers.utils.uuid_to_username` function.
+    `tamusers.utils.uuid_to_username` function.
     """
 
     user = details.get('user')

@@ -1,7 +1,7 @@
 import pytest
 import random
 from uuid import UUID
-from helusers.utils import uuid_to_username, username_to_uuid
+from tamusers.utils import uuid_to_username, username_to_uuid
 
 
 def test_uuid_to_username():

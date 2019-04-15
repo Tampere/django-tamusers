@@ -1,1 +1,1 @@
-default_app_config = 'tamusers.apps.TamusersConfig'
+default_app_config = 'tamusers.apps.TunnistamoUsersConfig'

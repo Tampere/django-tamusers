@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block content %}
-{% if tampere_provider_installed %}
-<div id="tampere-login"{% if grappelli_installed %} style="display: none;"{% endif %}>
+{% if staff_provider_installed %}
+<div id="staff-login"{% if grappelli_installed %} style="display: none;"{% endif %}>
     <p>Kirjaudu sisään Tampereen kaupungin työntekijän tunnuksella:</p>
     <div style="margin-bottom: 2em; margin-top: 1em;">
-        <a href="{{ tampere_login_url }}{% if redirect_path %}?next={{ redirect_path }}{% endif %}">
+        <a href="{{ staff_login_url }}{% if redirect_path %}?next={{ redirect_path }}{% endif %}">
             <button style="margin-left: 9em; width: auto;" class="button grp-button grp-default" type="button">Tampere Login</button>
         </a>
     </div>
@@ -36,7 +36,7 @@
         $(this).remove();
     });
 
-    $el = $("#tampere-login");
+    $el = $("#staff-login");
     $el.addClass('form-row grp-row');
     $el.prependTo($('div.module')).show();
 

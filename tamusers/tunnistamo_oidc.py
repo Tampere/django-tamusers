@@ -21,7 +21,7 @@ class TunnistamoOIDCAuth(OpenIdConnectAuth):
 
         params = dict(id_token_hint=id_token)
         try:
-            post_logout_url = reverse('helusers:auth_logout_complete')
+            post_logout_url = reverse('tamusers:auth_logout_complete')
         except NoReverseMatch:
             post_logout_url = None
         if post_logout_url:

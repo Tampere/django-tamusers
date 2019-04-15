@@ -9,15 +9,15 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='django-helusers',
+    name='django-tamusers',
     version='0.4.5',
-    packages=['helusers'],
+    packages=['tamusers'],
     include_package_data=True,
     license='BSD License',
     description='Django app for the user infrastructure of the City of Tampere',
     long_description=README,
     long_description_content_type='text/markdown',
-    url='https://github.com/City-of-Helsinki/django-helusers',
+    url='https://github.com/tampere/django-tamusers',
     author='City of Helsinki',
     author_email='dev@hel.fi',
     install_requires=[

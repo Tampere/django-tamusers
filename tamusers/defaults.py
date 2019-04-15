@@ -11,16 +11,16 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_uid',
 
     # Reset logged-in user if UUID differs
-    'helusers.pipeline.ensure_uuid_match',
+    'tamusers.pipeline.ensure_uuid_match',
 
     # Generate username from UUID
-    'helusers.pipeline.get_username',
+    'tamusers.pipeline.get_username',
 
     # Checks if the current social-account is already associated in the site.
     'social_core.pipeline.social_auth.social_user',
 
     # Get or create the user and update user data
-    'helusers.pipeline.create_or_update_user',
+    'tamusers.pipeline.create_or_update_user',
 
     # Create the record that associated the social account with this user.
     'social_core.pipeline.social_auth.associate_user',
@@ -31,9 +31,9 @@ SOCIAL_AUTH_PIPELINE = (
 
     # Store the end session URL in the user's session data so that
     # we can format logout links properly.
-    'helusers.pipeline.store_end_session_url',
+    'tamusers.pipeline.store_end_session_url',
 
     # If the access token gives access to external APIs, fetch the
     # API tokens here.
-    'helusers.pipeline.fetch_api_tokens',
+    'tamusers.pipeline.fetch_api_tokens',
 )
