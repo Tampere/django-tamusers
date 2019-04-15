@@ -50,7 +50,6 @@ class AbstractUser(DjangoAbstractUser):
         self._make_sure_uuid_is_set()
         if not self.username:
             self.set_username_from_uuid()
-        super(AbstractUser, self).clean()
 
     def _make_sure_uuid_is_set(self):
         if self.uuid is None:
@@ -65,6 +64,19 @@ class AbstractUser(DjangoAbstractUser):
             return '{0} {1}'.format(self.first_name, self.last_name).strip()
         else:
             return self.email
+
+    def get_short_name(self):
+        if self.first_name:
+            return self.first_name
+        return self.email
+
+    def get_username(self):
+        if not self.username or self.username.startswith('u-'):
+            return self.email
+        return self.username
+
+    def natural_key(self):
+        return (str(self.uuid),)
 
     def sync_groups_from_ad(self):
         """Determine which Django groups to add or remove based on AD groups."""

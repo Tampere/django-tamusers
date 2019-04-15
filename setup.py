@@ -2,27 +2,29 @@
 import os
 from setuptools import setup
 
-with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
+with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     README = readme.read()
 
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='django-tamusers',
-    version='0.4.2',
-    packages=['tamusers'],
+    name='django-helusers',
+    version='0.4.5',
+    packages=['helusers'],
     include_package_data=True,
     license='BSD License',
     description='Django app for the user infrastructure of the City of Tampere',
     long_description=README,
-    url='https://github.com/Tampere/django-tamusers',
-    author='Juha Yrjölä',
-    author_email='juha.yrjola@iki.fi',
+    long_description_content_type='text/markdown',
+    url='https://github.com/City-of-Helsinki/django-helusers',
+    author='City of Helsinki',
+    author_email='dev@hel.fi',
     install_requires=[
         'Django',
         'drf-oidc-auth>=0.9',
         'requests',
+        'python-jose',
     ],
     classifiers=[
         'Environment :: Web Environment',
