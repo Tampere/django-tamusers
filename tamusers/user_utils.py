@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.utils.translation import ugettext as _
 from django.db import transaction
+from django.utils.translation import ugettext as _
 from rest_framework import exceptions
 
 
@@ -12,9 +12,9 @@ def oidc_to_user_data(payload):
     payload = payload.copy()
 
     field_map = {
-        'given_name': 'first_name',
-        'family_name': 'last_name',
-        'email': 'email',
+        "given_name": "first_name",
+        "family_name": "last_name",
+        "email": "email",
     }
     ret = {}
     for token_attr, user_attr in field_map.items():
@@ -27,9 +27,8 @@ def oidc_to_user_data(payload):
 
 
 def populate_user(user, data):
-    exclude_fields = ['is_staff', 'password', 'is_superuser', 'id']
-    user_fields = [f.name for f in user._meta.fields
-                   if f.name not in exclude_fields]
+    exclude_fields = ["is_staff", "password", "is_superuser", "id"]
+    user_fields = [f.name for f in user._meta.fields if f.name not in exclude_fields]
     changed = False
     for field in user_fields:
         if field in data:
@@ -49,17 +48,18 @@ def update_user(user, payload, oidc=False):
     if changed or not user.pk:
         user.save()
 
-    ad_groups = payload.get('ad_groups', None)
+    ad_groups = payload.get("ad_groups", None)
     # Only update AD groups if it's a list of non-empty strings
     if isinstance(ad_groups, list) and (
-            all([isinstance(x, str) and x for x in ad_groups])):
+        all([isinstance(x, str) and x for x in ad_groups])
+    ):
         user.update_ad_groups(ad_groups)
 
 
 def get_or_create_user(payload, oidc=False):
-    user_id = payload.get('sub')
+    user_id = payload.get("sub")
     if not user_id:
-        msg = _('Invalid payload.')
+        msg = _("Invalid payload.")
         raise exceptions.AuthenticationFailed(msg)
 
     user_model = get_user_model()
@@ -75,14 +75,14 @@ def get_or_create_user(payload, oidc=False):
     # If allauth.socialaccount is installed, create the SocialAcount
     # that corresponds to this user. Otherwise logins through
     # allauth will not work for the user later on.
-    if 'allauth.socialaccount' in settings.INSTALLED_APPS:
-        from allauth.socialaccount.models import SocialAccount, EmailAddress
+    if "allauth.socialaccount" in settings.INSTALLED_APPS:
+        from allauth.socialaccount.models import EmailAddress, SocialAccount
 
         if oidc:
-            provider_name = 'tampere_oidc'
+            provider_name = "tampere_oidc"
         else:
-            provider_name = 'tampere'
-        args = {'provider': provider_name, 'uid': user_id}
+            provider_name = "tampere"
+        args = {"provider": provider_name, "uid": user_id}
         try:
             account = SocialAccount.objects.get(**args)
             assert account.user_id == user.id
@@ -96,8 +96,9 @@ def get_or_create_user(payload, oidc=False):
                 email = EmailAddress.objects.get(email__iexact=user.email)
                 assert email.user == user
             except EmailAddress.DoesNotExist:
-                email = EmailAddress(email=user.email.lower(), primary=True,
-                                     user=user, verified=True)
+                email = EmailAddress(
+                    email=user.email.lower(), primary=True, user=user, verified=True
+                )
                 email.save()
 
     return user
