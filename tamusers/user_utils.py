@@ -50,6 +50,9 @@ def populate_user(user, data):
     for field in user_fields:
         if field in data:
             val = data[field]
+            # Only update the email address if it's non-empty
+            if not val and field == "email":
+                continue
             if getattr(user, field) != val:
                 setattr(user, field, val)
                 changed = True
