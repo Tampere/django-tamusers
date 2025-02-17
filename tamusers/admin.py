@@ -2,7 +2,7 @@ from django.apps import apps
 from django.contrib import admin
 from django.conf import settings
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.module_loading import autodiscover_modules
 from .models import ADGroupMapping
@@ -33,8 +33,8 @@ class AdminSite(admin.AdminSite):
         elif hasattr(settings, 'WAGTAIL_SITE_NAME'):
             site_name = settings.WAGTAIL_SITE_NAME
         else:
-            return ugettext_lazy("Django admin")
-        return ugettext_lazy("%(site_name)s admin") % {'site_name': site_name}
+            return gettext_lazy("Django admin")
+        return gettext_lazy("%(site_name)s admin") % {'site_name': site_name}
 
     def each_context(self, request):
         ret = super(AdminSite, self).each_context(request)

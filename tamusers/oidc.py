@@ -1,7 +1,7 @@
 import requests
-from django.utils.encoding import smart_text
+from django.utils.encoding import smart_str
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from oidc_auth.authentication import JSONWebTokenAuthentication
 from oidc_auth.util import cache
 from rest_framework.authentication import get_authorization_header
@@ -54,7 +54,7 @@ class ApiTokenAuthentication(JSONWebTokenAuthentication):
     def get_jwt_value(self, request):
         auth = get_authorization_header(request).split()
 
-        if not auth or smart_text(auth[0]).lower() != self.auth_scheme.lower():
+        if not auth or smart_str(auth[0]).lower() != self.auth_scheme.lower():
             return None
 
         if len(auth) == 1:
