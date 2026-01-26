@@ -1,3 +1,5 @@
+import os
+
 from django.conf import settings
 from rest_framework.settings import APISettings
 
@@ -28,6 +30,16 @@ _defaults = dict(
 
     # URL of the OpenID Provider
     ISSUER='https://auth.tampere.fi',
+
+    # OIDC OAuth2 endpoints
+    OIDC_ACCESS_TOKEN_URL=os.getenv('OIDC_ACCESS_TOKEN_URL', 'https://auth.tampere.fi/openid/token/'),
+    OIDC_AUTHORIZE_URL=os.getenv('OIDC_AUTHORIZE_URL', 'https://auth.tampere.fi/openid/authorize/'),
+    OIDC_PROFILE_URL=os.getenv('OIDC_PROFILE_URL', 'https://auth.tampere.fi/openid/userinfo/'),
+
+    # OAuth2 endpoints
+    OAUTH2_ACCESS_TOKEN_URL=os.getenv('OAUTH2_ACCESS_TOKEN_URL', 'https://auth.tampere.fi/oauth2/token/'),
+    OAUTH2_AUTHORIZE_URL=os.getenv('OAUTH2_AUTHORIZE_URL', 'https://auth.tampere.fi/oauth2/authorize/'),
+    OAUTH2_PROFILE_URL=os.getenv('OAUTH2_PROFILE_URL', 'https://auth.tampere.fi/user/'),
 
     # Auth scheme used in the Authorization header
     AUTH_SCHEME='Bearer',

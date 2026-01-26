@@ -4,13 +4,14 @@ from allauth.socialaccount.providers.oauth2.views import (OAuth2Adapter,
                                                           OAuth2LoginView,
                                                           OAuth2CallbackView)
 from .provider import TampereProvider
+from tamusers.settings import api_token_auth_settings
 
 
 class TampereOAuth2Adapter(OAuth2Adapter):
     provider_id = TampereProvider.id
-    access_token_url = 'https://auth.tampere.fi/oauth2/token/'
-    authorize_url = 'https://auth.tampere.fi/oauth2/authorize/'
-    profile_url = 'https://auth.tampere.fi/user/'
+    access_token_url = api_token_auth_settings.OAUTH2_ACCESS_TOKEN_URL
+    authorize_url = api_token_auth_settings.OAUTH2_AUTHORIZE_URL
+    profile_url = api_token_auth_settings.OAUTH2_PROFILE_URL
 
     def complete_login(self, request, app, token, **kwargs):
         headers = {'Authorization': 'Bearer {0}'.format(token.token)}
